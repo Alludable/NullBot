@@ -1,2 +1,2 @@
 # NullBot
-General Purpose discord bo
+General Purpose discord bot

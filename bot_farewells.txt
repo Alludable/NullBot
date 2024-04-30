@@ -1,0 +1,10 @@
+We're going to miss having you around, {user}. May your next adventure be grand!
+Farewell, {user}! Your presence will be missed. 
+Goodbye {user}! Don't be a stranger, we'll keep the light on for you.
+Wishing you all the best, {user}. The server won't be the same without you!
+It's not a 'goodbye', it's a 'see you later', {user}. Take care!
+Hey {user}, thanks for the memories! We hope to cross paths again someday.
+Sad to see you go, {user}. Remember, you'll always have a place here with us.
+Parting is such sweet sorrow! Farewell {user}, until we meet again.
+It's been real, {user}. Keep being awesome wherever you go!
+So long, {user}! May your journey be filled with joy and discovery.

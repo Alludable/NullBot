@@ -1,0 +1,10 @@
+Hey {user}, the party just started!
+{user} just joined the chat. Let's roll!
+Welcome aboard, {user}!
+Good to see you, {user}!
+{user} just joined. Everyone, look busy!
+Welcome {user}. Say hi to everyone!
+{user} is here. The fun can begin!
+Glad you're here, {user}!
+Everyone welcome {user}!
+Yay! {user} is finally here!

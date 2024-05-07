@@ -2,14 +2,14 @@
 import os
 
 import discord
+from pytube import YouTube
+import urllib.parse, urllib.request, re
 import yt_dlp
-import requests, json
 from dotenv import load_dotenv
 from discord.ext import commands
 import giphy_client
 from giphy_client.rest import ApiException
 import asyncio
-import time
 import random
 
 
@@ -23,15 +23,26 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 SERVER = os.getenv('DISCORD_SERVER')
 API_KEY = os.getenv('API_KEY')
 
+youtube_base_url = 'https://www.youtube.com/'
+youtube_results_url = youtube_base_url + 'results?'
+youtube_watch_url = youtube_base_url + 'watch?v='
+queues = {}
+music_state = {
+    "repeat_songs": 0,
+    "current_song": None
+}
+voice_clients = {}
 ytdl_opts = {
             'format': 'bestaudio/best',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
             }],
         }
         
 ytdl = yt_dlp.YoutubeDL(ytdl_opts)
-ffmpeg_options = {'options': '-vn'}
+ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
 def greeting():
     file = open('bot_greetings.txt', 'r')
@@ -54,6 +65,10 @@ def farewell():
         
     line = (random.randint(0, (count - 1)))
     return f_content[line]
+
+def getv_title(url: str):
+    youtube = YouTube(url)
+    return youtube.title
 
 @client.command(name = "hi")
 async def SendMessage(ctx):
@@ -145,7 +160,6 @@ async def gif(ctx,*,q="One Piece"):
         print(f"Exception from the API as: {e}")
         
         
-
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -154,47 +168,69 @@ async def on_message(message):
     msg = message.content.lower()
     
     words_list = ['gm', "good morning"]
-    
     if any(word in msg for word in words_list):
         await message.channel.send(f"Good morning {message.author}!")
         
     await client.process_commands(message)
     
 @client.command()
-async def play(ctx, url : str=r'https://www.youtube.com/watch?v=dQw4w9WgXcQ'):
+async def play(ctx,*, url : str=r'https://www.youtube.com/watch?v=dQw4w9WgXcQ'):
     try:
        if url == r'https://www.youtube.com/watch?v=dQw4w9WgXcQ':
            await ctx.channel.send("You didn't specify a url so I've chosen one for you. Enjoy :)") 
-       else:
-            voice_client = await ctx.author.voice.channel.connect()
-            voice_clients = [voice_client.guild.id]
-            voice_channel = discord.utils.get(ctx.guild.voice_channels, name="music-channel")
+      
+       voice_client = await ctx.author.voice.channel.connect()
+       voice_clients[voice_client.guild.id] = voice_client
+       voice_channel = discord.utils.get(ctx.guild.voice_channels, name="music-channel")
 
-            await ctx.channel.send(f"```{client.user} has connected to music-channel.```")
-            print(f"{client.user} has connected to {str(voice_channel)}.")
+       await ctx.channel.send(f"```{client.user} has connected to music-channel.```")
+       print(f"{client.user} has connected to {str(voice_channel)}.")
     
     except Exception as e:
         print(e)
         
     try:
-        if url != r'https://www.youtube.com/watch?v=dQw4w9WgXcQ':
-            url = ctx.message.content.split()[1]
-        else:
-            url = url
         
+        if "www.youtube.com" not in url:
+            search_query = urllib.parse.urlencode({'search_query': url})
+            
+            content = urllib.request.urlopen(youtube_results_url + search_query)
+            results = re.findall(r'\watch\?v=(.{11})', content.read().decode())
+            
+            url = youtube_watch_url + results[0]        
+            
         loop =  asyncio.get_event_loop()
         data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
         
         song = data['url']
-        player = discord.FFmpegPCMAudio(song, **ffmpeg_options)
-        
-        voice_clients[ctx.message.guild.id].play(player)
+        player = discord.FFmpegOpusAudio(song, **ffmpeg_options)
+        video_title = getv_title(url)
+        voice_clients[ctx.guild.id].play(player, after = lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx), client.loop))
+        await ctx.send(f"```Currently Playing: {video_title}```")
     
     except Exception as e:
         print(e)
         
+@client.command(name='clear_queue')
+async def clear_queue(ctx):
+    if ctx.guild.id in queues:
+        queues[ctx.message.guild.id].clear()
+        await ctx.send("```The queue has been cleared.```")
+    else:
+        await ctx.send("```There is no queue to clear.```")
         
-    
+@client.command(name='skip')
+async def skip(ctx):
+   voice = ctx.message.guild.voice_client
+   if not voice or not voice_clients[ctx.guild.id]:
+        await ctx.send("```I'm not currently playing any audio.```")
+   elif not queues:
+       await ctx.send("```There's no queue.```")
+   elif voice_clients[ctx.guild.id]:
+       voice_clients[ctx.guild.id].stop()
+       await ctx.send("```Skipped the current track.```")
+       await play_next(ctx)
+   
 @client.command()
 async def leave(ctx):
     voice_channel = discord.utils.get(ctx.guild.voice_channels, name="music-channel")
@@ -202,41 +238,70 @@ async def leave(ctx):
     if voice != None:
         if voice.is_connected():
             await voice.disconnect()
+            del voice_clients[ctx.guild.id]
             print(f"{client.user} has disconnected from {str(voice_channel)}")
     else:
         await ctx.send("```I'm not currently connected to a voice channel.```")
         
 @client.command()
 async def pause(ctx):
-    voice = discord.utils.get(client.voice_clients, guild = ctx.guild)
-    if not ctx.voice.channel:
-        await ctx.channel.send("```I'm not currently in a voice channel.")
+    voice = ctx.message.guild.voice_client
+    if not voice:
+        await ctx.channel.send("```I'm not currently in a voice channel.```")
         return
-    if voice.is_playing():
-        voice.pause()
+    elif voice_clients[ctx.guild.id].is_playing():
+        voice_clients[ctx.guild.id].pause()
+        await ctx.channel.send("```The music was paused.```")   
     else:
         await ctx.send("```I'm not currently playing any audio.```")
 
-@client.command
+@client.command()
 async def resume(ctx):
-    voice = discord.utils.get(client.voice_clients, guild = ctx.guild)
-    if not ctx.voice.channel:
+    voice = ctx.message.guild.voice_client
+    if not voice:
         await ctx.channel.send("```I'm not currently in a voice channel.```")
         return
-    if voice.is_paused():
-        voice.resume()
+    elif voice_clients[ctx.guild.id].is_paused():
+        voice_clients[ctx.guild.id].resume()
+        await ctx.channel.send("```The music was resumed.```")
     else:
         await ctx.send("```The audio hasn't been paused.```")
         
-@client.command
+@client.command()
 async def stop(ctx):
-    vc = ctx.VoiceClient.source
-    voice = discord.utils.get(client.voice_clients, guild = ctx.guild)
-    if not ctx.voice.channel:
+    voice = ctx.message.guild.voice_client
+    if not voice:
         await ctx.channel.send("```I'm not currently in a voice channel.```")
         return
+    elif voice_clients[ctx.guild.id].is_playing():
+        voice_clients[ctx.guild.id].stop()
+        await ctx.channel.send("```The music was stopped.```")
     else:
-        voice.stop()
+        await ctx.send("```I'm not currently playing any audio.```")
+        
+@client.command(name='queue')
+async def queue(ctx,*,url):
+    if ctx.guild.id not in queues:
+        queues[ctx.guild.id] = []
+    if "www.youtube.com" in url:
+        video_title = getv_title(url)
+    else:
+        video_title = url
+    queues[ctx.guild.id].append(url)
+    await ctx.send(f"```Added '{video_title}' to the queue.```")
     
-            
+@client.command()
+async def display_queue(ctx):
+    output_string = '\n'.join(getv_title(str(value)) for value in queues[ctx.guild.id])
+    if len(output_string) == 0:
+        await ctx.send("```There's currently no items in your queue.```")
+    else:
+        await ctx.send(f"```Here's the current items in the queue: \n{output_string}```")
+    
+async def play_next(ctx):
+    if queues[ctx.guild.id]:
+        url = queues[ctx.guild.id].pop(0)
+        await play(ctx, url=url)
+        
+
 client.run(TOKEN)

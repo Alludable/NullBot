@@ -113,7 +113,7 @@ async def on_ready():
     
     members = '\n - '.join([member.name for member in server.members])
     print(f'Server Members:\n - {members}')
-    await client.change_presence(activity=discord.Game("Doing Nothing\nType {command_prefix}cmds if you need help."))
+    await client.change_presence(activity=discord.Game("Type {command_prefix}cmds if you need help."))
     
 @client.event
 async def on_member_join(member):

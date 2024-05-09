@@ -15,8 +15,9 @@ import random
 
 intents = discord.Intents.all()
 intents.message_content = True
+command_prefix = r'$'
 
-client  = commands.Bot(command_prefix = "$", intents=intents)
+client  = commands.Bot(command_prefix = command_prefix, intents=intents)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -53,6 +54,7 @@ def greeting():
         count += 1
         
     line = (random.randint(0, (count - 1)))
+    file.close()
     return f_content[line]
 
 def farewell():
@@ -64,15 +66,37 @@ def farewell():
         count += 1
         
     line = (random.randint(0, (count - 1)))
+    file.close()
+    return f_content[line]
+
+def grab_quote():
+    file = open('quotes.txt', 'r')
+    f_content = file.readlines()
+    count = 0
+    
+    for line in f_content:
+        count += 1
+        
+    line = (random.randint(0, (count - 1)))
+    file.close()
     return f_content[line]
 
 def getv_title(url: str):
     youtube = YouTube(url)
     return youtube.title
 
+@client.command()
+async def cmds(ctx):
+    await ctx.message.author.send(f"```Hello {ctx.message.author.name}!\nI see that you're in need of some help so I've compiled a list of my commands and how to use them for you!\n\t-To play music type '{command_prefix}play [enter the url here (or if you prefer a random term and I'll look for the first result)].\n\t-To pause the music type '{command_prefix}pause'\n\t-To resume the music type '{command_prefix}resume'.\n\t-To have me leave the voice call type '{command_prefix}leave' while you're in the same voice channel.\n\t-To stop the music entirely type '{command_prefix}stop'.\n\t-To queue music type '{command_prefix}queue [enter the url here (or if you prefer a random term and I'll look for the first result)].\n\t-To skip a song type '{command_prefix}skip' (This only works if there's a queue).\n\tTo completely clear the queue type '{command_prefix}clear_queue'.\n\t-To display the current songs in the queue type '{command_prefix}display_queue'.\n\t-To have me generate a gif type '{command_prefix}gif (you can specify a search term here).\n\t-To kick someone type '{command_prefix}kick @user [enter reason]'.\n\t-To ban someone type '{command_prefix}ban @user [enter reason]'.\n\t-To simply warn someone type '{command_prefix}warn @user [enter reason]'.\nThese are all of my current commands, be responsible!```")
+
 @client.command(name = "hi")
 async def SendMessage(ctx):
     await ctx.send("Hello!")
+    
+@client.command()
+async def quote(ctx):
+    quote = grab_quote()
+    await ctx.send(f"```{quote}```")
 
 @client.event
 async def on_ready():
@@ -85,7 +109,8 @@ async def on_ready():
     
     members = '\n - '.join([member.name for member in server.members])
     print(f'Server Members:\n - {members}')
-
+    await client.change_presence(activity=discord.Game("Doing Nothing\nType {command_prefix}cmds if you need help."))
+    
 @client.event
 async def on_member_join(member):
     user_greeting = greeting()
@@ -117,6 +142,24 @@ async def on_member_join(member):
 async def test(ctx, args):
     await ctx.send(args)
     
+@client.command()
+@commands.has_permissions(administrator=True)
+async def kick(ctx, member: discord.Member = None, *,reason="No reason"):
+    await member.kick(reason = reason)
+    await ctx.send(f"```Kicked {member.name} for '{reason}'```")
+    await member.send(f"```You have been *Kicked* by *{ctx.author.name}* in {ctx.guild.name} for '{reason}'```.")
+    
+@client.command()
+@commands.has_permissions(administrator=True)
+async def ban(ctx, member: discord.Member = None, *,reason="No reason"):
+    await member.ban(reason = reason)
+    await ctx.send(f"```Banned {member.name}. '{reason}'```")    
+    
+@client.command()
+@commands.has_permissions(administrator=True)
+async def warn(ctx, member: discord.Member = None, *,reason="No reason"):
+    await member.send(f"```You have been *Warned* by *{ctx.author.name}* in {ctx.guild.name} for '{reason}'```.")
+    await ctx.send(f"```Warned {member.name}.```")
         
 @client.event
 async def on_member_remove(member):
@@ -289,6 +332,7 @@ async def queue(ctx,*,url):
         video_title = url
     queues[ctx.guild.id].append(url)
     await ctx.send(f"```Added '{video_title}' to the queue.```")
+    
     
 @client.command()
 async def display_queue(ctx):

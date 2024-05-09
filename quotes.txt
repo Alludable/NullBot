@@ -1,0 +1,100 @@
+"Software is like entropy: It is difficult to grasp, weighs nothing, and obeys the Second Law of Thermodynamics; i.e., it always increases." - Norman Augustine
+"Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it." - Brian Kernighan
+"The internet is not just one thing; it's a collection of things - of numerous communications networks that all speak the same digital language." - Jim Clark
+"The computer was born to solve problems that did not exist before." - Bill Gates
+"To err is human, but to really foul things up requires a computer." - Paul Ehrlich
+"The function of good software is to make the complex appear simple." - Grady Booch
+"In programming, the hard part isn't solving problems, but deciding what problems to solve." - Paul Graham
+"Programming isn't about what you know; it's about what you can figure out." - Chris Pine
+"Java is to JavaScript as car is to carpet." - Chris Heilmann
+"The best thing about a boolean is even if you are wrong, you are only off by a bit." - Unknown
+"I told my wife she should embrace her mistakes. She gave me a hug." - Unknown
+"I'm writing a book. I've got the page numbers done." - Steven Wright
+"I am so clever that sometimes I don't understand a single word of what I am saying." - Oscar Wilde
+"I used to jog but the ice cubes kept falling out of my glass." - David Lee Roth
+"If at first, you don't succeed, then skydiving definitely isn't for you." - Steven Wright
+"I asked God for a bike, but I know God doesn't work that way. So I stole a bike and asked for forgiveness." - Emo Philips
+"I'm writing a book. I've got the page numbers done." - Steven Wright
+"I intend to live forever. So far, so good." - Steven Wright
+"I don't need a hair stylist, my pillow gives me a new hairstyle every morning." - Unknown
+"Do not take life too seriously. You will never get out of it alive." - Elbert Hubbard
+"Believe you can and you're halfway there." - Theodore Roosevelt
+"The only way to do great work is to love what you do." - Steve Jobs
+"Success is not final, failure is not fatal: It is the courage to continue that counts." - Winston Churchill
+"The only limit to our realization of tomorrow will be our doubts of today." - Franklin D. Roosevelt
+"The secret of getting ahead is getting started." - Mark Twain
+"The journey of a thousand miles begins with one step." - Lao Tzu
+"You miss 100% of the shots you don't take." - Wayne Gretzky
+"The only person you are destined to become is the person you decide to be." - Ralph Waldo Emerson
+"Opportunities don't happen, you create them." - Chris Grosser
+"Failure will never overtake me if my determination to succeed is strong enough." - Og Mandino
+"Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work." - Steve Jobs
+"Innovation distinguishes between a leader and a follower." - Steve Jobs
+"Your time is limited, don't waste it living someone else's life." - Steve Jobs
+"Stay hungry, stay foolish." - Steve Jobs
+"Design is not just what it looks like and feels like. Design is how it works." - Steve Jobs
+"The people who are crazy enough to think they can change the world are the ones who do." - Steve Jobs
+"Great things in business are never done by one person; they're done by a team of people." - Steve Jobs
+"Don't let the noise of others' opinions drown out your own inner voice." - Steve Jobs
+"Quality is more important than quantity. One home run is much better than two doubles." - Steve Jobs
+"Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose." - Steve Jobs
+"The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"From a little spark may burst a flame." - Dante Alighieri
+"There is no greater sorrow than to recall happiness in times of misery." - Dante Alighieri
+"The more perfect a thing is, the more susceptible to good and bad treatment it is." - Dante Alighieri
+"In His will is our peace." - Dante Alighieri
+"Do not be afraid; our fate cannot be taken from us; it is a gift." - Dante Alighieri
+"The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"The day that man allows true love to appear, those things which are well made will fall into confusion and will overturn everything we believe to be right and true." - Dante Alighieri
+"The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"Remember tonight... for it is the beginning of always." - Dante Alighieri
+"Any fool can write code that a computer can understand. Good programmers write code that humans can understand." - Martin Fowler
+"Software, like a gas, expands to fill its container." - Nathan Myhrvold
+"If debugging is the process of removing software bugs, then programming must be the process of putting them in." - Edsger Dijkstra
+"Code is like humor. When you have to explain it, it’s bad." - Cory House
+"I'm not a great programmer; I'm just a good programmer with great habits." - Kent Beck
+"The best software is the one that is least noticed by the user." - Anthony T. Hincks
+"The most disastrous thing that you can ever learn is your first programming language." - Alan Kay
+"The best programmers are not marginally better than merely good ones. They are an order-of-magnitude better." - Randall E. Stross
+"Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live." - John Woods
+"Computers are like bikinis. They save people a lot of guesswork." - Sam Ewing
+"If at first, you don’t succeed, then skydiving definitely isn’t for you." - Steven Wright
+"I don’t need a hair stylist, my pillow gives me a new hairstyle every morning." - Unknown
+"A clear conscience is a sure sign of a bad memory." - Mark Twain
+"The early bird gets the worm, but the second mouse gets the cheese." - Unknown
+"I’m writing a book. I’ve got the page numbers done." - Steven Wright
+"I intend to live forever. So far, so good." - Steven Wright
+"I used to jog but the ice cubes kept falling out of my glass." - David Lee Roth
+"I told my wife she should embrace her mistakes. She gave me a hug." - Unknown
+"Change is inevitable, except from a vending machine." - Unknown
+"Why do they call it rush hour when nothing moves?" - Robin Williams
+"The only way to do great work is to love what you do." - Steve Jobs
+"Success is not the key to happiness. Happiness is the key to success. If you love what you are doing, you will be successful." - Albert Schweitzer
+"Believe you can and you're halfway there." - Theodore Roosevelt
+"You are never too old to set another goal or to dream a new dream." - C.S. Lewis
+"Don't watch the clock; do what it does. Keep going." - Sam Levenson
+"The only limit to our realization of tomorrow will be our doubts of today." - Franklin D. Roosevelt
+"Success is not final, failure is not fatal: It is the courage to continue that counts." - Winston Churchill
+"The only person you are destined to become is the person you decide to be." - Ralph Waldo Emerson
+"The road to success and the road to failure are almost exactly the same." - Colin R. Davis
+"Hardships often prepare ordinary people for an extraordinary destiny." - C.S. Lewis
+"Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work." - Steve Jobs
+"Innovation distinguishes between a leader and a follower." - Steve Jobs
+"Your time is limited, don't waste it living someone else's life." - Steve Jobs
+"Stay hungry, stay foolish." - Steve Jobs
+"Design is not just what it looks like and feels like. Design is how it works." - Steve Jobs
+"The people who are crazy enough to think they can change the world are the ones who do." - Steve Jobs
+"Great things in business are never done by one person; they're done by a team of people." - Steve Jobs
+"Don't let the noise of others' opinions drown out your own inner voice." - Steve Jobs
+"Quality is more important than quantity. One home run is much better than two doubles." - Steve Jobs
+"Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose." - Steve Jobs
+The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"From a little spark may burst a flame." - Dante Alighieri
+"There is no greater sorrow than to recall happiness in times of misery." - Dante Alighieri
+"The more perfect a thing is, the more susceptible to good and bad treatment it is." - Dante Alighieri
+"In His will is our peace." - Dante Alighieri
+"Do not be afraid; our fate cannot be taken from us; it is a gift." - Dante Alighieri
+"The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"The day that man allows true love to appear, those things which are well made will fall into confusion and will overturn everything we believe to be right and true." - Dante Alighieri
+"The darkest places in hell are reserved for those who maintain their neutrality in times of moral crisis." - Dante Alighieri
+"Remember tonight... for it is the beginning of always." - Dante Alighieri

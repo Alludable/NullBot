@@ -92,6 +92,10 @@ async def cmds(ctx):
 @client.command(name = "hi")
 async def SendMessage(ctx):
     await ctx.send("Hello!")
+
+@client.command()
+async def creator(ctx):
+    await ctx.send("```I was built by Oluwaseun Adeyemo. I think he's working at Apple right now...```")
     
 @client.command()
 async def quote(ctx):

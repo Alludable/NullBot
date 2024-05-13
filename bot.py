@@ -92,7 +92,7 @@ async def cmds(ctx):
 @client.command(name = "hi")
 async def SendMessage(ctx):
     await ctx.send("Hello!")
-
+    
 @client.command()
 async def creator(ctx):
     await ctx.send("```I was built by Oluwaseun Adeyemo. I think he's working at Apple right now...```")
@@ -193,7 +193,7 @@ async def gif(ctx,*,q="One Piece"):
     api_instance = giphy_client.DefaultApi()
     
     try:
-            api_responce = api_instance.gifs_search_get(api_key, q, limit=100, rating='g')
+            api_responce = api_instance.gifs_search_get(api_key, q, limit=100, rating='r')
             lst = list(api_responce.data)
             giff = random.choice(lst)
   
@@ -201,10 +201,11 @@ async def gif(ctx,*,q="One Piece"):
             embed.set_image(url=f"https://media.giphy.com/media/{giff.id}/giphy.gif")
             
             await ctx.channel.send(embed=embed)
-            print("If you're seeing this and the command hasn't properly executed then you've run out of API calls.")
-    
+        
     except ApiException as e:
         print(f"Exception from the API as: {e}")
+        print("If you're seeing this and the command hasn't properly executed then you've run out of API calls.")
+    
         
         
 @client.event
@@ -225,11 +226,15 @@ async def play(ctx,*, url : str=r'https://www.youtube.com/watch?v=dQw4w9WgXcQ'):
     try:
        if url == r'https://www.youtube.com/watch?v=dQw4w9WgXcQ':
            await ctx.channel.send("You didn't specify a url so I've chosen one for you. Enjoy :)") 
-      
+       
+       if ctx.author.voice == None:
+           await ctx.send("```You must join a voice channel first.```")
+           return
+       
        voice_client = await ctx.author.voice.channel.connect()
        voice_clients[voice_client.guild.id] = voice_client
        voice_channel = discord.utils.get(ctx.guild.voice_channels, name="music-channel")
-
+       
        await ctx.channel.send(f"```{client.user} has connected to music-channel.```")
        print(f"{client.user} has connected to {str(voice_channel)}.")
     

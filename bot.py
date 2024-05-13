@@ -345,6 +345,9 @@ async def queue(ctx,*,url):
     
 @client.command()
 async def display_queue(ctx):
+    if ctx.guild.id not in queues:
+        await ctx.send("```There's currently no items in your queue.```")
+        return
     output_string = '\n'.join(getv_title(str(value)) for value in queues[ctx.guild.id])
     if len(output_string) == 0:
         await ctx.send("```There's currently no items in your queue.```")

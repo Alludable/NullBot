@@ -193,7 +193,7 @@ async def gif(ctx,*,q="One Piece"):
     api_instance = giphy_client.DefaultApi()
     
     try:
-            api_responce = api_instance.gifs_search_get(api_key, q, limit=100, rating='r')
+            api_responce = api_instance.gifs_search_get(api_key, q, limit=100, rating='g')
             lst = list(api_responce.data)
             giff = random.choice(lst)
   
